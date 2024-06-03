@@ -1,28 +1,40 @@
 ﻿using LeaveManagement.Core.Domain.Entities;
 using LeaveManagement.Core.Domain.RepositoryContracts;
+using LeaveManagement.Infrastructure.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace LeaveManagement.Infrastructure.Repositories
 {
     public class LeaveTypeRepository : ILeaveTypeRepository
     {
-        public Task<LeaveType> AddLeaveType(LeaveType leaveType)
+        private readonly ApplicationDbContext _db;
+
+        public LeaveTypeRepository(ApplicationDbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public Task<List<LeaveType>> GetAllLeavesType()
+        public async Task<LeaveType> AddLeaveType(LeaveType leaveType)
         {
-            throw new NotImplementedException();
+            _db.LeaveType.Add(leaveType);
+            await _db.SaveChangesAsync();
+            return leaveType;
         }
 
-        public Task<LeaveType?> GetLeaveTypeByID(Guid leaveTypeID)
+        public async Task<List<LeaveType>> GetAllLeavesType()
         {
-            throw new NotImplementedException();
+            return await _db.LeaveType.ToListAsync();
         }
 
-        public Task<LeaveType?> GetLeaveTypeByName(string leaveTypeName)
+        public async Task<LeaveType?> GetLeaveTypeByID(Guid leaveTypeID)
         {
-            throw new NotImplementedException();
+            return await _db.LeaveType.FirstOrDefaultAsync(temp => temp.Id == leaveTypeID);
+        }
+
+        public async Task<LeaveType?> GetLeaveTypeByName(string leaveTypeName)
+        {
+            return await _db.LeaveType.FirstOrDefaultAsync(temp => temp.Name == leaveTypeName);
         }
     }
 }
