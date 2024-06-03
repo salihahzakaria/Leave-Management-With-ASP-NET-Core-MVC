@@ -1,4 +1,5 @@
-﻿using LeaveManagement.Core.Domain.RepositoryContracts;
+﻿using LeaveManagement.Core.Domain.Entities;
+using LeaveManagement.Core.Domain.RepositoryContracts;
 using LeaveManagement.Core.DTO;
 using LeaveManagement.Core.ServiceContracts;
 
@@ -13,9 +14,27 @@ namespace LeaveManagement.Core.Services
             _leaveTypeRepository = leaveTypeRepository;
         }
 
-        public Task<LeaveTypeResponse> AddLeaveType(LeaveTypeAddRequest? leaveTypeAddRequest)
+        public async Task<LeaveTypeResponse> AddLeaveType(LeaveTypeAddRequest? leaveTypeAddRequest)
         {
-            throw new NotImplementedException();
+            if (leaveTypeAddRequest == null)
+            {
+                throw new ArgumentNullException(nameof(leaveTypeAddRequest));
+            }    
+
+            if (leaveTypeAddRequest.Name == null)
+            {
+                throw new ArgumentException(nameof(leaveTypeAddRequest.Name));
+            }
+
+            if (await _leaveTypeRepository.GetLeaveTypeByName(leaveTypeAddRequest.Name) != null)
+            {
+                throw new ArgumentException("Leave Type already exists");
+            }
+
+            LeaveType leaveType = leaveTypeAddRequest.ToLeaveType();
+            leaveType.Id = Guid.NewGuid();
+            await _leaveTypeRepository.AddLeaveType(leaveType);
+            return leaveType.ToLeaveTypeResponse();
         }
 
         public Task<List<LeaveTypeResponse>> GetAllLeavesType()
