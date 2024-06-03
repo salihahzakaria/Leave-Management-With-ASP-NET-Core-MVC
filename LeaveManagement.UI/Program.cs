@@ -3,10 +3,21 @@ using LeaveManagement.Infrastructure.DatabaseContext;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using LeaveManagement.Core.Domain.RepositoryContracts;
+using LeaveManagement.Core.ServiceContracts;
+using LeaveManagement.Core.Services;
+using LeaveManagement.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
+builder.Services.AddScoped<ILeaveService, LeaveService>();
+
+builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+builder.Services.AddScoped<ILeaveRepository, LeaveRepository>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
     {
@@ -30,5 +41,13 @@ builder.Services
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
+app.UseStaticFiles();
+app.UseRouting();
+app.MapControllers();
 
 app.Run();
