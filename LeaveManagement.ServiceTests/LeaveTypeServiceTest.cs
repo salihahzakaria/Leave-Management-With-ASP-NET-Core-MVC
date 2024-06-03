@@ -29,7 +29,7 @@ namespace LeaveManagement.ServiceTests
 
         #region AddLeaveType
         [Fact]
-        public async void AddLeaveType_NullLeaveType_ToBeArgumentNullException()
+        public async Task AddLeaveType_NullLeaveType_ToBeArgumentNullException()
         {
             //Arrange
             LeaveTypeAddRequest leaveTypeAddRequest = null;
@@ -45,7 +45,7 @@ namespace LeaveManagement.ServiceTests
         }
 
         [Fact]
-        public async void AddLeaveType_LeaveTypeNameIsNull_ToBeArgumentException()
+        public async Task AddLeaveType_LeaveTypeNameIsNull_ToBeArgumentException()
         {
             //Arrange
             LeaveTypeAddRequest? leaveTypeAddRequest = _fixture
@@ -71,7 +71,7 @@ namespace LeaveManagement.ServiceTests
         }
 
         [Fact]
-        public async void AddLeaveType_LeaveTypeNameIsDuplicate_ToBeArgumentException()
+        public async Task AddLeaveType_LeaveTypeNameIsDuplicate_ToBeArgumentException()
         {
             //Arrange
             LeaveTypeAddRequest? leaveTypeAddRequest = _fixture
@@ -103,7 +103,7 @@ namespace LeaveManagement.ServiceTests
         }
 
         [Fact]
-        public async void AddLeaveType_FullLeaveTypeDetails_ToBeSuccessful()
+        public async Task AddLeaveType_FullLeaveTypeDetails_ToBeSuccessful()
         {
             //Arrange
             LeaveTypeAddRequest? leaveTypeAddRequest = _fixture.Create<LeaveTypeAddRequest>();
@@ -122,6 +122,81 @@ namespace LeaveManagement.ServiceTests
             //Assert
             leaveTypeResponseFromAdd.Id.Should().NotBe(Guid.Empty);
             leaveTypeResponseFromAdd.Should().Be(leaveTypeResponseExpected);
+        }
+        #endregion
+
+        #region GetAllLeaveType 
+        [Fact]
+        public async Task GetAllLeaveType_EmptyList_ToBeEmpty()
+        {
+            //Arrange
+            List<LeaveType> leaveTypes = new List<LeaveType>();
+
+            _leaveTypeRepositoryMock
+                .Setup(temp => temp.GetAllLeavesType()).ReturnsAsync(leaveTypes);
+
+            //Act
+            List<LeaveTypeResponse> leaveTypeResponseListActual = await _leaveTypeService.GetAllLeavesType();
+
+            //Assert
+            leaveTypeResponseListActual.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllLeaveType_AddFewLeaveType_ToBeSuccessful()
+        {
+            //Arrange
+            _fixture.Behaviors
+               .OfType<ThrowingRecursionBehavior>().ToList()
+               .ForEach(temp => _fixture.Behaviors.Remove(temp));
+
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            List<LeaveType> leaveTypes = new List<LeaveType>()
+            {
+                _fixture
+                .Build<LeaveType>()
+                .With(temp => temp.Name, "Annual Leave")
+                .Create(),
+
+                _fixture
+                .Build<LeaveType>()
+                .With(temp => temp.Name, "Emergency Leave")
+                .Create(),
+
+                _fixture
+                .Build<LeaveType>()
+                .With(temp => temp.Name, "Sick Leave")
+                .Create(),
+            };
+
+            List<LeaveTypeResponse> leaveTypeResponsesListExpected = leaveTypes
+                .Select(temp => temp
+                .ToLeaveTypeResponse())
+                .ToList();
+
+            _leaveTypeRepositoryMock
+                .Setup(temp => temp.GetAllLeavesType()).ReturnsAsync(leaveTypes);
+
+            //print leaveTypeResponsesListExpected
+            _testOutputHelper.WriteLine("Expected: ");
+            foreach (LeaveTypeResponse leaveTypeResponsesExpected in leaveTypeResponsesListExpected)
+            {
+                _testOutputHelper.WriteLine(leaveTypeResponsesExpected.ToString());
+            }
+
+            //Act
+            List<LeaveTypeResponse> leaveTypeResponseListActual = await _leaveTypeService.GetAllLeavesType();
+
+            //print leaveTypeResponseListActual
+            _testOutputHelper.WriteLine("Expected: ");
+            foreach (LeaveTypeResponse leaveTypeResponseActual in leaveTypeResponseListActual)
+            {
+                _testOutputHelper.WriteLine(leaveTypeResponseActual.ToString());
+            }
+
+            //Assert
+            leaveTypeResponseListActual.Should().BeEquivalentTo(leaveTypeResponsesListExpected);
         }
         #endregion
     }
