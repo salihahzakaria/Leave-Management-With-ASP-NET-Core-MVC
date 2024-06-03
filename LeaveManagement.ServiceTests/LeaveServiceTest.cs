@@ -85,5 +85,88 @@ namespace LeaveManagement.ServiceTests
             leaveResponseActual.Should().Be(leaveResponseExpected);
         }
         #endregion
+
+        #region GetAllLeave
+        [Fact]
+        public async Task GetAllLeave_EmptyList_ToBeEmpty()
+        {
+            //Arrange
+            List<Leave> leaves = new List<Leave>();
+
+            _leaveRepositoryMock
+                .Setup(temp => temp.GetAllLeaves()).ReturnsAsync(leaves);
+
+            //Act
+            List<LeaveResponse> leaveResponsesListActual = await _leaveService.GetAllLeaves();
+
+            //Assert
+            leaveResponsesListActual.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllLeave_AddFewLeave_ToBeSuccessful()
+        {
+            //Arrange
+            _fixture.Behaviors
+               .OfType<ThrowingRecursionBehavior>().ToList()
+               .ForEach(temp => _fixture.Behaviors.Remove(temp));
+
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            List<Leave> leaves = new List<Leave>()
+            {
+                _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create(),
+
+                _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create(),
+
+                _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create()
+            };
+
+            List<LeaveResponse> leaveResponsesListExpected = leaves
+                .Select(temp => temp
+                .ToLeaveResponse())
+                .ToList();
+
+            _leaveRepositoryMock
+                .Setup(temp => temp
+                .GetAllLeaves())
+                .ReturnsAsync(leaves);
+
+            //print leaveResponsesListExpected
+            _testOutputHelper.WriteLine("Expected: ");
+            foreach (LeaveResponse leaveResponseExpected in leaveResponsesListExpected)
+            {
+                _testOutputHelper.WriteLine(leaveResponseExpected.ToString());
+            }
+
+            //Act
+            List<LeaveResponse> leaveResponsesListActual = await _leaveService.GetAllLeaves();
+
+            //print leaveResponsesListActual
+            _testOutputHelper.WriteLine("Expected: ");
+            foreach (LeaveResponse leaveResponseActual in leaveResponsesListActual)
+            {
+                _testOutputHelper.WriteLine(leaveResponseActual.ToString());
+            }
+
+            //Assert
+            leaveResponsesListActual.Should().BeEquivalentTo(leaveResponsesListExpected);
+        }
+        #endregion
     }
 }

@@ -1,6 +1,8 @@
-﻿using LeaveManagement.Core.Domain.RepositoryContracts;
+﻿using LeaveManagement.Core.Domain.Entities;
+using LeaveManagement.Core.Domain.RepositoryContracts;
 using LeaveManagement.Core.DTO;
 using LeaveManagement.Core.Enums;
+using LeaveManagement.Core.Helpers;
 using LeaveManagement.Core.ServiceContracts;
 
 namespace LeaveManagement.Core.Services
@@ -14,9 +16,19 @@ namespace LeaveManagement.Core.Services
             _leaveRepository = leaveRepository;
         }
 
-        public Task<LeaveResponse> AddLeave(LeaveAddRequest? leaveAddRequest)
+        public async Task<LeaveResponse> AddLeave(LeaveAddRequest? leaveAddRequest)
         {
-            throw new NotImplementedException();
+            if (leaveAddRequest == null)
+            {
+                throw new ArgumentNullException(nameof(leaveAddRequest));
+            }
+
+            ValidationHelper.ModelValidation(leaveAddRequest);
+
+            Leave leave = leaveAddRequest.ToLeave();
+            leave.Id = Guid.NewGuid();
+            await _leaveRepository.AddLeave(leave);
+            return leave.ToLeaveResponse();
         }
 
         public Task<bool> DeleteLeave(Guid? leaveID)
