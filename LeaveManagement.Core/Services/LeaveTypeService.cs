@@ -44,9 +44,21 @@ namespace LeaveManagement.Core.Services
             return leaveTypes.Select(temp => temp.ToLeaveTypeResponse()).ToList();
         }
 
-        public Task<LeaveTypeResponse?> GetLeaveTypeByLeaveTypeID(Guid? leaveTypeID)
+        public async Task<LeaveTypeResponse?> GetLeaveTypeByLeaveTypeID(Guid? leaveTypeID)
         {
-            throw new NotImplementedException();
+            if (leaveTypeID == null)
+            {
+                return null;
+            }
+
+            LeaveType? leaveType = await _leaveTypeRepository.GetLeaveTypeByID(leaveTypeID.Value);
+
+            if (leaveType == null)
+            {
+                return null;
+            }
+
+            return leaveType.ToLeaveTypeResponse();
         }
     }
 }

@@ -238,14 +238,14 @@ namespace LeaveManagement.ServiceTests
 
             //print leaveTypeResponseExpected
             _testOutputHelper.WriteLine("Expected: ");
-            _testOutputHelper.WriteLine(leaveTypeResponseExpected.Id.ToString());
+            _testOutputHelper.WriteLine(leaveTypeResponseExpected.ToString());
 
             //Act
             LeaveTypeResponse? leaveTypeResponseActual = await _leaveTypeService.GetLeaveTypeByLeaveTypeID(leaveType.Id);
 
             //print leaveTypeResponseActual
             _testOutputHelper.WriteLine("Actual: ");
-            _testOutputHelper.WriteLine(leaveTypeResponseActual?.Id.ToString());
+            _testOutputHelper.WriteLine(leaveTypeResponseActual?.ToString());
 
             //Assert
             leaveTypeResponseActual.Should().Be(leaveTypeResponseExpected);
