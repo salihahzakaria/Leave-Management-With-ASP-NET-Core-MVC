@@ -1,44 +1,99 @@
 ﻿using LeaveManagement.Core.Domain.Entities;
 using LeaveManagement.Core.Domain.RepositoryContracts;
+using LeaveManagement.Infrastructure.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace LeaveManagement.Infrastructure.Repositories
 {
     public class LeaveRepository : ILeaveRepository
     {
-        public Task<Leave> AddLeave(Leave leave)
+        private readonly ApplicationDbContext _db;
+
+        public LeaveRepository(ApplicationDbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public Task<bool> DeleteLeave(Guid leaveID)
+        public async Task<Leave> AddLeave(Leave leave)
         {
-            throw new NotImplementedException();
+            _db.Leave.Add(leave);
+            await _db.SaveChangesAsync();
+            return leave;
         }
 
-        public Task<List<Leave>> GetAllLeaves()
+        public async Task<bool> DeleteLeave(Guid leaveID)
         {
-            throw new NotImplementedException();
+            _db.Leave
+                .RemoveRange(_db.Leave
+                .Where(temp => temp.Id == leaveID));
+
+            int rowsDeleted = await _db.SaveChangesAsync();
+            return rowsDeleted > 0;
         }
 
-        public Task<List<Leave>> GetFilteredLeaves(Expression<Func<Leave, bool>> predicate)
+        public async Task<List<Leave>> GetAllLeaves()
         {
-            throw new NotImplementedException();
+            return await _db.Leave
+                .Include("User")
+                .Include("LeaveType")
+                .Include("Approver")
+                .ToListAsync();
         }
 
-        public Task<Leave?> GetLeaveByLeaveID(Guid leaveID)
+        public async Task<List<Leave>> GetFilteredLeaves(Expression<Func<Leave, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await _db.Leave
+                .Include("User")
+                .Include("LeaveType")
+                .Include("Approver")
+                .Where(predicate)
+                .ToListAsync();
         }
 
-        public Task<List<Leave>> GetLeaveByUserID(Guid? userID)
+        public async Task<Leave?> GetLeaveByLeaveID(Guid leaveID)
         {
-            throw new NotImplementedException();
+            return await _db.Leave
+                .Include("User")
+                .Include("LeaveType")
+                .Include("Approver")
+                .FirstOrDefaultAsync(temp => temp.Id == leaveID);
         }
 
-        public Task<Leave> UpdateLeave(Leave leave)
+        public async Task<List<Leave>> GetLeaveByUserID(Guid? userID)
         {
-            throw new NotImplementedException();
+            return await _db.Leave
+                .Include("User")
+                .Include("LeaveType")
+                .Include("Approver")
+                .Where(temp => temp.UserID == userID)
+                .ToListAsync();
+        }
+
+        public async Task<Leave> UpdateLeave(Leave leave)
+        {
+            Leave? matchingLeave = await _db.Leave
+                .Include("User")
+                .Include("LeaveType")
+                .Include("Approver")
+                .FirstOrDefaultAsync(temp => temp.Id == leave.Id);
+
+            if (matchingLeave == null)
+            {
+                return leave;
+            }
+
+            matchingLeave.UserID = leave.UserID;
+            matchingLeave.LeaveTypeID = leave.LeaveTypeID;
+            matchingLeave.StartDate = leave.StartDate;
+            matchingLeave.EndDate = leave.EndDate;
+            matchingLeave.Reason = leave.Reason;
+            matchingLeave.Status = leave.Status;
+            matchingLeave.ApproverID = leave.ApproverID;
+
+            await _db.SaveChangesAsync();
+
+            return matchingLeave;
         }
     }
 }
