@@ -1,4 +1,5 @@
-﻿using LeaveManagement.Core.DTO;
+﻿using LeaveManagement.Core.Domain.RepositoryContracts;
+using LeaveManagement.Core.DTO;
 using LeaveManagement.Core.Enums;
 using LeaveManagement.Core.ServiceContracts;
 
@@ -6,6 +7,13 @@ namespace LeaveManagement.Core.Services
 {
     public class LeaveService : ILeaveService
     {
+        private readonly ILeaveRepository _leaveRepository;
+
+        public LeaveService(ILeaveRepository leaveRepository)
+        {
+            _leaveRepository = leaveRepository;
+        }
+
         public Task<LeaveResponse> AddLeave(LeaveAddRequest? leaveAddRequest)
         {
             throw new NotImplementedException();
