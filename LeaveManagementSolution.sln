@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.UI", "LeaveManagement.UI\LeaveManagement.UI.csproj", "{9D0602AB-3408-488D-BADB-6E3286E6CD0D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EA5EA123-788E-4491-A002-AC6D76877831}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.Core", "LeaveManagement.Core\LeaveManagement.Core.csproj", "{F22C264A-2532-4F40-ADE7-CC8B92B1604F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,17 @@ Global
 		{9D0602AB-3408-488D-BADB-6E3286E6CD0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D0602AB-3408-488D-BADB-6E3286E6CD0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D0602AB-3408-488D-BADB-6E3286E6CD0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F22C264A-2532-4F40-ADE7-CC8B92B1604F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22C264A-2532-4F40-ADE7-CC8B92B1604F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22C264A-2532-4F40-ADE7-CC8B92B1604F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22C264A-2532-4F40-ADE7-CC8B92B1604F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9D0602AB-3408-488D-BADB-6E3286E6CD0D} = {EA5EA123-788E-4491-A002-AC6D76877831}
+		{F22C264A-2532-4F40-ADE7-CC8B92B1604F} = {EA5EA123-788E-4491-A002-AC6D76877831}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F026310F-DB8F-4141-87A2-FF70A87DC671}
