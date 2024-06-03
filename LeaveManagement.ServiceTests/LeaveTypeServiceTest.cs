@@ -199,5 +199,57 @@ namespace LeaveManagement.ServiceTests
             leaveTypeResponseListActual.Should().BeEquivalentTo(leaveTypeResponsesListExpected);
         }
         #endregion
+
+        #region GetLeaveTypeByLeaveTypeID
+        [Fact]
+        public async Task GetLeaveTypeByLeaveTypeID_NullLeaveTypeID_ToBeNull()
+        {
+            //Arrange
+            Guid? leaveTypeID = null;
+
+            //Act
+            LeaveTypeResponse? leaveTypeResponseExpected = await _leaveTypeService.GetLeaveTypeByLeaveTypeID(leaveTypeID);
+
+            //Assert
+            leaveTypeResponseExpected.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task GetLeaveTypeByLeaveTypeID_ValidLeaveTypeID_ToBeSuccessful()
+        {
+            //Arrange
+            _fixture.Behaviors
+                .OfType<ThrowingRecursionBehavior>().ToList()
+                .ForEach(temp => _fixture.Behaviors.Remove(temp));
+
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            LeaveType leaveType = _fixture
+                .Build<LeaveType>()
+                .With(temp => temp.Name, "Sick Leave")
+                .Create();
+
+            LeaveTypeResponse leaveTypeResponseExpected = leaveType.ToLeaveTypeResponse();
+
+            _leaveTypeRepositoryMock
+                .Setup(temp => temp
+                .GetLeaveTypeByID(It.IsAny<Guid>()))
+                .ReturnsAsync(leaveType);
+
+            //print leaveTypeResponseExpected
+            _testOutputHelper.WriteLine("Expected: ");
+            _testOutputHelper.WriteLine(leaveTypeResponseExpected.Id.ToString());
+
+            //Act
+            LeaveTypeResponse? leaveTypeResponseActual = await _leaveTypeService.GetLeaveTypeByLeaveTypeID(leaveType.Id);
+
+            //print leaveTypeResponseActual
+            _testOutputHelper.WriteLine("Actual: ");
+            _testOutputHelper.WriteLine(leaveTypeResponseActual?.Id.ToString());
+
+            //Assert
+            leaveTypeResponseActual.Should().Be(leaveTypeResponseExpected);
+        }
+        #endregion
     }
 }
