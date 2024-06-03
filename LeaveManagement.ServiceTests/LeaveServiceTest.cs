@@ -168,5 +168,57 @@ namespace LeaveManagement.ServiceTests
             leaveResponsesListActual.Should().BeEquivalentTo(leaveResponsesListExpected);
         }
         #endregion
+
+        #region GetLeaveByLeaveID
+        [Fact]
+        public async Task GetLeaveByLeaveID_NullLeaveID_ToBeNull()
+        {
+            //Arrange
+            Guid? leaveID = null;
+
+            //Act
+            LeaveResponse? leaveResponseExpected = await _leaveService.GetLeaveByLeaveID(leaveID);
+
+            //Assert
+            leaveResponseExpected.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task GetLeaveByLeaveID_ValidLeaveID_ToBeSuccessful()
+        {
+            //Arrange
+            _fixture.Behaviors
+                .OfType<ThrowingRecursionBehavior>().ToList()
+                .ForEach(temp => _fixture.Behaviors.Remove(temp));
+
+            Leave leave = _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create();
+
+            LeaveResponse leaveResponseExpected = leave.ToLeaveResponse();
+
+            _leaveRepositoryMock
+                .Setup(temp => temp
+                .GetLeaveByLeaveID(It.IsAny<Guid>()))
+                .ReturnsAsync(leave);
+
+            //print leaveResponseExpected
+            _testOutputHelper.WriteLine("Expected: ");
+            _testOutputHelper.WriteLine(leaveResponseExpected.ToString());
+
+            //Act
+            LeaveResponse? leaveResponseActual = await _leaveService.GetLeaveByLeaveID(leave.Id);
+
+            //print leaveResponseActual
+            _testOutputHelper.WriteLine("Actual: ");
+            _testOutputHelper.WriteLine(leaveResponseActual?.ToString());
+
+            //Assert
+            leaveResponseActual.Should().Be(leaveResponseExpected);
+        }
+        #endregion
     }
 }

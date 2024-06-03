@@ -36,9 +36,10 @@ namespace LeaveManagement.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<LeaveResponse>> GetAllLeaves()
+        public async Task<List<LeaveResponse>> GetAllLeaves()
         {
-            throw new NotImplementedException();
+            List<Leave> leaves = await _leaveRepository.GetAllLeaves();
+            return leaves.Select(temp => temp.ToLeaveResponse()).ToList();
         }
 
         public Task<List<LeaveResponse>> GetFilteredLeaves(string searchBy, string? searchString)
