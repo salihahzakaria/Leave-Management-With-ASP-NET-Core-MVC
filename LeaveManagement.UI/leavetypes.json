@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "0E0189FD-8113-42E4-9E8A-C82A41CF631F",
+    "Name": "Annual Leave"
+  },
+  {
+    "Id": "25EDE852-C021-4806-9737-D98587920BC4",
+    "Name": "Emergency Leave"
+  },
+  {
+    "Id": "E6246713-77B9-454A-9D94-20E1230CCE5B",
+    "Name": "Sick Leave"
+  }
+]
