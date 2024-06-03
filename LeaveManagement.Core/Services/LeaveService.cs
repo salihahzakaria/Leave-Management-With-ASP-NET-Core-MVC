@@ -47,9 +47,21 @@ namespace LeaveManagement.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<LeaveResponse?> GetLeaveByLeaveID(Guid? leaveID)
+        public async Task<LeaveResponse?> GetLeaveByLeaveID(Guid? leaveID)
         {
-            throw new NotImplementedException();
+            if (leaveID == null)
+            {
+                return null;
+            }
+
+            Leave? leave = await _leaveRepository.GetLeaveByLeaveID(leaveID.Value);
+
+            if (leave == null)
+            {
+                return null;
+            }
+
+            return leave.ToLeaveResponse();
         }
 
         public Task<List<LeaveResponse>> GetLeaveByUserID(Guid? userID)
