@@ -86,9 +86,35 @@ namespace LeaveManagement.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<LeaveResponse> UpdateLeave(LeaveUpdateRequest? leaveUpdateRequest)
+        public async Task<LeaveResponse> UpdateLeave(LeaveUpdateRequest? leaveUpdateRequest)
         {
-            throw new NotImplementedException();
+            if (leaveUpdateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(leaveUpdateRequest));
+            }
+
+            //Validation
+            ValidationHelper.ModelValidation(leaveUpdateRequest);
+
+            Leave? matchingLeave = await _leaveRepository.GetLeaveByLeaveID(leaveUpdateRequest.Id);
+
+            if (matchingLeave == null)
+            {
+                throw new ArgumentException("No leave were found");
+            }
+
+            //Update all details
+            matchingLeave.UserID = leaveUpdateRequest.UserID;
+            matchingLeave.LeaveTypeID = leaveUpdateRequest.LeaveTypeID;
+            matchingLeave.StartDate = leaveUpdateRequest.StartDate;
+            matchingLeave.EndDate = leaveUpdateRequest.EndDate;
+            matchingLeave.Reason = leaveUpdateRequest.Reason;
+            matchingLeave.Status = leaveUpdateRequest.Status.ToString();
+            matchingLeave.ApproverID = leaveUpdateRequest.ApproverID;
+
+            await _leaveRepository.UpdateLeave(matchingLeave);
+
+            return matchingLeave.ToLeaveResponse();
         }
     }
 }
