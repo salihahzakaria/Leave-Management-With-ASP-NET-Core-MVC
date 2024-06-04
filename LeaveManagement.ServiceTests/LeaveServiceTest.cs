@@ -403,5 +403,45 @@ namespace LeaveManagement.ServiceTests
             leaveResponseActual.Should().Be(leaveResponseExpected);
         }
         #endregion
+
+        #region DeleteLeave
+        [Fact]
+        public async Task DeleteLeave_InvalidLeaveID_ToBeFalse()
+        {
+            //Act
+            bool isDeleted = await _leaveService.DeleteLeave(Guid.NewGuid());
+
+            //Assert
+            isDeleted.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task DeleteLeave_ValidLeaveID_ToBeSuccessful()
+        {
+            //Arrange
+            Leave leave = _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create();
+
+            _leaveRepositoryMock
+                .Setup(temp => temp
+                .GetLeaveByLeaveID(It.IsAny<Guid>()))
+                .ReturnsAsync(leave);
+
+            _leaveRepositoryMock
+                .Setup(temp => temp
+                .DeleteLeave(It.IsAny<Guid>()))
+                .ReturnsAsync(true);
+
+            //Act
+            bool isDeleted = await _leaveService.DeleteLeave(leave.Id);
+
+            //Assert
+            isDeleted.Should().BeTrue();
+        }
+        #endregion
     }
 }

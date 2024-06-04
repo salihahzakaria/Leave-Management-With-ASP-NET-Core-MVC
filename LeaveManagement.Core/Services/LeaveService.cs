@@ -31,9 +31,18 @@ namespace LeaveManagement.Core.Services
             return leave.ToLeaveResponse();
         }
 
-        public Task<bool> DeleteLeave(Guid? leaveID)
+        public async Task<bool> DeleteLeave(Guid? leaveID)
         {
-            throw new NotImplementedException();
+            Leave? leave = await _leaveRepository.GetLeaveByLeaveID(leaveID.Value);
+
+            if (leave == null)
+            {
+                return false;
+            }
+
+            await _leaveRepository.DeleteLeave(leaveID.Value);
+
+            return true;
         }
 
         public async Task<List<LeaveResponse>> GetAllLeaves()
