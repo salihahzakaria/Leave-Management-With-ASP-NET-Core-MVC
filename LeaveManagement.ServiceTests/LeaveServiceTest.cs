@@ -220,5 +220,84 @@ namespace LeaveManagement.ServiceTests
             leaveResponseActual.Should().Be(leaveResponseExpected);
         }
         #endregion
+
+        #region GetLeaveByUserID
+        [Fact]
+        public async Task GetLeaveByUserID_NullUserID_ToBeNull()
+        {
+            //Arrange
+            Guid? userID = null;
+
+            //Act
+            List<LeaveResponse> leaveResponseExpected = await _leaveService.GetLeaveByUserID(userID);
+
+            //Assert
+            leaveResponseExpected.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task GetLeaveByUserID_ValidUserID_ToBeSuccessful()
+        {
+            //Arrange
+            _fixture.Behaviors
+                .OfType<ThrowingRecursionBehavior>().ToList()
+                .ForEach(temp => _fixture.Behaviors.Remove(temp));
+
+            List<Leave> leaves = new List<Leave>()
+            {
+                _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create(),
+
+                _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create(),
+
+                _fixture
+                .Build<Leave>()
+                .With(temp => temp.User, null as ApplicationUser)
+                .With(temp => temp.LeaveType, null as LeaveType)
+                .With(temp => temp.Approver, null as ApplicationUser)
+                .Create()
+            };
+
+            List<LeaveResponse> leaveResponsesListExpected = leaves
+                .Select(temp => temp
+                .ToLeaveResponse())
+                .ToList();
+
+            var userId = Guid.NewGuid();
+
+            _leaveRepositoryMock
+                .Setup(temp => temp
+                .GetLeaveByUserID(userId))
+                .ReturnsAsync(leaves);
+
+            //print leaveResponsesListExpected
+            _testOutputHelper.WriteLine("Expected: ");
+            foreach (LeaveResponse leaveResponseExpected in leaveResponsesListExpected)
+            {
+                _testOutputHelper.WriteLine(leaveResponseExpected.ToString());
+            }
+
+            //Act
+            List<LeaveResponse> leaveResponsesListActual = await _leaveService.GetLeaveByUserID(userId);
+
+            //print leaveResponseActual
+            _testOutputHelper.WriteLine("Actual: ");
+            foreach (LeaveResponse leaveResponseActual in leaveResponsesListActual)
+            {
+                _testOutputHelper.WriteLine(leaveResponseActual.ToString());
+            }
+            //Assert
+            leaveResponsesListActual.Should().BeEquivalentTo(leaveResponsesListExpected);
+        }
+        #endregion
     }
 }

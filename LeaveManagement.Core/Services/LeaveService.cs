@@ -64,9 +64,21 @@ namespace LeaveManagement.Core.Services
             return leave.ToLeaveResponse();
         }
 
-        public Task<List<LeaveResponse>> GetLeaveByUserID(Guid? userID)
+        public async Task<List<LeaveResponse>> GetLeaveByUserID(Guid? userID)
         {
-            throw new NotImplementedException();
+            if (userID == null)
+            {
+                return null;
+            }
+
+            List<Leave> leaves = await _leaveRepository.GetLeaveByUserID(userID.Value);
+
+            if (leaves == null)
+            {
+                return null;
+            }
+
+            return leaves.Select(temp => temp.ToLeaveResponse()).ToList();
         }
 
         public Task<List<LeaveResponse>> GetSortedLeaves(List<LeaveResponse> allLeaves, string sortBy, SortOrderOptions sortOrderOptions)
