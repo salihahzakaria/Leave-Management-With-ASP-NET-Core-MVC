@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.UI", "LeaveManagement.UI\LeaveManagement.UI.csproj", "{9D0602AB-3408-488D-BADB-6E3286E6CD0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.UI", "LeaveManagement.UI\LeaveManagement.UI.csproj", "{9D0602AB-3408-488D-BADB-6E3286E6CD0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EA5EA123-788E-4491-A002-AC6D76877831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.Core", "LeaveManagement.Core\LeaveManagement.Core.csproj", "{F22C264A-2532-4F40-ADE7-CC8B92B1604F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.Core", "LeaveManagement.Core\LeaveManagement.Core.csproj", "{F22C264A-2532-4F40-ADE7-CC8B92B1604F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.Infrastructure", "LeaveManagement.Infrastructure\LeaveManagement.Infrastructure.csproj", "{8D67F3C3-4B5A-4B6A-B335-CA8531DE7AD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.Infrastructure", "LeaveManagement.Infrastructure\LeaveManagement.Infrastructure.csproj", "{8D67F3C3-4B5A-4B6A-B335-CA8531DE7AD5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1586E2B6-2C64-4BE4-BFB9-55CC432F00A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.ServiceTests", "LeaveManagement.ServiceTests\LeaveManagement.ServiceTests.csproj", "{86E5E4F4-2E80-4AD5-A20D-C319AD62D685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.ServiceTests", "LeaveManagement.ServiceTests\LeaveManagement.ServiceTests.csproj", "{86E5E4F4-2E80-4AD5-A20D-C319AD62D685}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.ControllerTests", "LeaveManagement.ControllerTests\LeaveManagement.ControllerTests.csproj", "{8FBCAF11-E479-4F62-AB95-721CA612AFF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{86E5E4F4-2E80-4AD5-A20D-C319AD62D685}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86E5E4F4-2E80-4AD5-A20D-C319AD62D685}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86E5E4F4-2E80-4AD5-A20D-C319AD62D685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FBCAF11-E479-4F62-AB95-721CA612AFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FBCAF11-E479-4F62-AB95-721CA612AFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FBCAF11-E479-4F62-AB95-721CA612AFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FBCAF11-E479-4F62-AB95-721CA612AFF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{F22C264A-2532-4F40-ADE7-CC8B92B1604F} = {EA5EA123-788E-4491-A002-AC6D76877831}
 		{8D67F3C3-4B5A-4B6A-B335-CA8531DE7AD5} = {EA5EA123-788E-4491-A002-AC6D76877831}
 		{86E5E4F4-2E80-4AD5-A20D-C319AD62D685} = {1586E2B6-2C64-4BE4-BFB9-55CC432F00A0}
+		{8FBCAF11-E479-4F62-AB95-721CA612AFF9} = {1586E2B6-2C64-4BE4-BFB9-55CC432F00A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F026310F-DB8F-4141-87A2-FF70A87DC671}

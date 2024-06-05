@@ -1,0 +1,30 @@
+﻿@model IEnumerable<LeaveTypeResponse>
+
+@{
+    ViewBag.Title = "Leave Type";
+}
+
+<h1 class="text-3xl font-bold underline">
+    Hello world!
+</h1>
+
+<form asp-controller="LeavesType" asp-action="Index" asp-area="Admin" method="get">
+    <h1>Leaves</h1>
+    <a asp-controller="LeavesType" asp-action="Create" class="link-hover">Add a new leave type</a>
+
+    <table class="table w-100 mt">
+        <thead>
+            <tr>
+                <th>Leave Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (LeaveTypeResponse leave_type in Model)
+            {
+                <tr>
+                    <td>@leave_type.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
