@@ -4,25 +4,23 @@
     ViewBag.Title = "Leave Type";
 }
 
-<h1 class="text-3xl text-red-400 font-bold underline">
-    Hello world!
-</h1>
+<form asp-controller="LeaveType" asp-action="Index" asp-area="Admin" method="get" class="p-4">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-semibold">Leave Type</h1>
+        <a asp-controller="LeaveType" asp-action="Create" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">New Leave Type</a>
+    </div>
 
-<form asp-controller="LeavesType" asp-action="Index" asp-area="Admin" method="get">
-    <h1>Leaves</h1>
-    <a asp-controller="LeavesType" asp-action="Create" class="link-hover">Add a new leave type</a>
-
-    <table class="table w-100 mt">
-        <thead>
+    <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <thead class="bg-gray-200">
             <tr>
-                <th>Leave Type</th>
+                <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Leave Type</th>
             </tr>
         </thead>
         <tbody>
             @foreach (LeaveTypeResponse leave_type in Model)
             {
-                <tr>
-                    <td>@leave_type.Name</td>
+                <tr class="border-b">
+                    <td class="py-3 px-4 text-gray-900">@leave_type.Name</td>
                 </tr>
             }
         </tbody>
