@@ -180,5 +180,41 @@ namespace LeaveManagement.UI.Areas.Admin.Controllers
                 area = "Admin"
             });
         }
+
+        [Route("[action]/leaveID")]
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid? leaveID)
+        {
+            LeaveResponse? leaveResponse = await _leaveService.GetLeaveByLeaveID(leaveID);
+
+            if (leaveResponse == null)
+            {
+                return RedirectToAction("Index", "Leave", new
+                {
+                    area = "Admin"
+                });
+            }
+
+            return View(leaveResponse);
+        }
+
+        [Route("[action]/leaveID")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(LeaveUpdateRequest leaveUpdateRequest)
+        {
+            LeaveResponse? leaveResponse = await _leaveService.GetLeaveByLeaveID(leaveUpdateRequest.Id);
+
+            if (leaveResponse == null)
+            {
+                return RedirectToAction("Index", "Leaves");
+            }
+
+            await _leaveService.DeleteLeave(leaveUpdateRequest.Id);
+
+            return RedirectToAction("Index", "Leave", new
+            {
+                area = "Admin"
+            });
+        }
     }
 }

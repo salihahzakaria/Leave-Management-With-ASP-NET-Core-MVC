@@ -1,0 +1,63 @@
+﻿@model LeaveResponse
+
+@{
+    ViewBag.Title = "Edit leave";
+}
+
+<h2 class="text-2xl font-semibold p-4">Delete Leave</h2>
+
+<div class="p-4">
+    <form asp-controller="Leave" asp-action="Delete" asp-area="Admin" method="post" class="space-y-4">
+
+        @* Id (hidden) *@
+        <input type="hidden" asp-for="Id" />
+
+        @* Name *@
+        <div class="mb-4">
+            <label asp-for="User" class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" asp-for="User" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" disabled />
+        </div>
+
+        @* Leave Type *@
+        <div class="mb-4">
+            <label asp-for="LeaveType" class="block text-sm font-medium text-gray-700">Leave Type</label>
+            <input type="text" asp-for="LeaveType" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" disabled />
+        </div>
+
+        @* Start Date *@
+        <div class="mb-4">
+            <label asp-for="StartDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+            <input type="text" asp-for="StartDate" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" disabled />
+        </div>
+
+        @* End Date *@
+        <div class="mb-4">
+            <label asp-for="EndDate" class="block text-sm font-medium text-gray-700">End Date</label>
+            <input type="text" asp-for="EndDate" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" disabled />
+        </div>
+
+        @* Reason *@
+        <div class="mb-4">
+            <label asp-for="Reason" class="block text-sm font-medium text-gray-700">Reason</label>
+            <input type="text" asp-for="Reason" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" disabled />
+        </div>
+
+        @* Status *@
+        <div class="mb-4">
+            <label asp-for="Status" class="block text-sm font-medium text-gray-700">Status</label>
+            <input type="text" asp-for="Status" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" disabled />
+        </div>
+
+        @* Approver *@
+        <div class="mb-4">
+            <label asp-for="ApproverID" class="block text-sm font-medium text-gray-700">Approver</label>
+            <input type="text" asp-for="Approver" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" disabled />
+        </div>
+
+        @* Submit *@
+        <div class="flex items-center justify-end">
+            <button type="submit" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">Delete</button>
+        </div>
+    </form>
+</div>
+

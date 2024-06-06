@@ -45,6 +45,7 @@
                         <td class="py-3 px-4 text-gray-900">@leave.Approver</td>
                         <td class="py-3 px-4 text-gray-900">
                             <a asp-controller="Leave" asp-action="Edit" asp-area="Admin" asp-route-leaveId="@leave.Id" class="bg-pink-500 text-white p-2 rounded hover:bg-pink-600">Edit</a>
+                            <a asp-controller="Leave" asp-action="Delete" asp-area="Admin" asp-route-leaveId="@leave.Id" class="bg-pink-500 text-white p-2 rounded hover:bg-pink-600">Delete</a>
                         </td>
                     </tr>
                 }
