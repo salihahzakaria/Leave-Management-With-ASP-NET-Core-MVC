@@ -28,6 +28,7 @@
                     <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Reason</th>
                     <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Status</th>
                     <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Approver</th>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +43,9 @@
                         <td class="py-3 px-4 text-gray-900">@leave.Reason</td>
                         <td class="py-3 px-4 text-gray-900">@leave.Status</td>
                         <td class="py-3 px-4 text-gray-900">@leave.Approver</td>
+                        <td class="py-3 px-4 text-gray-900">
+                            <a asp-controller="Leave" asp-action="Edit" asp-area="Admin" asp-route-leaveId="@leave.Id" class="bg-pink-500 text-white p-2 rounded hover:bg-pink-600">Edit</a>
+                        </td>
                     </tr>
                 }
             </tbody>
