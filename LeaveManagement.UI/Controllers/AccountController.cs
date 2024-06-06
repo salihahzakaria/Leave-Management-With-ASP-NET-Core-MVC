@@ -89,5 +89,59 @@ namespace LeaveManagement.UI.Controllers
                 return View(registerRequest);
             }
         }
+
+        [Route("[action]")]
+        [Route("/")]
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Errors = ModelState.Values
+                    .SelectMany(temp => temp.Errors)
+                    .Select(temp => temp.ErrorMessage);
+
+                return View(loginRequest);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, true, false);
+
+            if (result.Succeeded)
+            {
+                ApplicationUser user = await _userManager.FindByEmailAsync(loginRequest.Email);
+
+                if (user != null)
+                {
+                    // Check if user 'Admin'
+                    if (await _userManager.IsInRoleAsync(user, UserTypeOptions.Admin.ToString()))
+                    {
+                        return RedirectToAction("Index", "Leave", new
+                        {
+                            Areas = "Admin"
+                        });
+                    }
+                    // Check if user 'Employee'
+                    else if (await _userManager.IsInRoleAsync(user, UserTypeOptions.Employee.ToString()))
+                    {
+                        return RedirectToAction("Index", "Leave", new
+                        {
+                            Areas = "Employee"
+                        });
+                    }
+                }
+
+                return RedirectToAction("Login", "Account");
+            }
+
+            ModelState.AddModelError("Login", "Invalid email or password");
+            return View(loginRequest);
+        }
     }
 }
