@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<form asp-controller="Account" asp-action="Index" asp-area="Admin" method="get" class="p-4">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-semibold">All Users</h1>
+        <a asp-controller="Account" asp-action="Register" asp-area="Admin" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">Register new user</a>
+    </div>
+
+    <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Name</th>
+                <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Email</th>
+                <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Phone Number</th>
+                <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ApplicationUser user in Model)
+            {
+                <tr class="border-b">
+                    <td class="py-3 px-4 text-gray-900">@user.EmployeeName</td>
+                    <td class="py-3 px-4 text-gray-900">@user.Email</td>
+                    <td class="py-3 px-4 text-gray-900">@user.PhoneNumber</td>
+                    <td class="py-3 px-4 text-gray-900">@string.Join(", ", ViewBag.UserRoles[user.Id])</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
