@@ -7,6 +7,7 @@ using LeaveManagement.Core.Domain.RepositoryContracts;
 using LeaveManagement.Core.ServiceContracts;
 using LeaveManagement.Core.Services;
 using LeaveManagement.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,21 @@ builder.Services
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
     .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
 
+builder.Services
+    .AddAuthorization(options =>
+    {
+        options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()             //User must be authenticated for all action method
+        .Build();
+    });
+
+builder.Services
+    .ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+    });
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -48,6 +64,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();    //Read identity cookie
+app.UseAuthorization();     //Validate access permission of the user
 app.MapControllers();
-
 app.Run();
+

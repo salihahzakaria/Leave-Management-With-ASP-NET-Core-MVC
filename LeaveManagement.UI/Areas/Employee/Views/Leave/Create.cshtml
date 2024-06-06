@@ -1,0 +1,63 @@
+﻿@model LeaveAddRequest
+
+@{
+    ViewBag.Title = "Request new leave";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Apply Leave</h2>
+
+<div class="w-50 p-4">
+    <form asp-controller="Leave" asp-action="Create" asp-area="Employee" method="post" class="space-y-4">
+
+        @* Name (hidden) *@
+        <input type="hidden" asp-for="UserID" value="@ViewBag.UserID" />
+
+        @* Leave Type *@
+        <div class="mb-4">
+            <label asp-for="LeaveTypeID" class="block text-sm font-medium text-gray-700">Leave Type</label>
+            <select asp-for="LeaveTypeID" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" asp-items="@ViewBag.LeaveTypes">
+                <option value="">Please Select</option>
+            </select>
+            <span asp-validation-for="LeaveTypeID" class="text-pink-900 text-sm"></span>
+        </div>
+
+        @* Start Date *@
+        <div class="mb-4">
+            <label asp-for="StartDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+            <input asp-for="StartDate" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" />
+            <span asp-validation-for="StartDate" class="text-pink-900 text-sm"></span>
+        </div>
+
+        @* End Date *@
+        <div class="mb-4">
+            <label asp-for="EndDate" class="block text-sm font-medium text-gray-700">End Date</label>
+            <input asp-for="EndDate" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" />
+            <span asp-validation-for="EndDate" class="text-pink-900 text-sm"></span>
+        </div>
+
+        @* Reason *@
+        <div class="mb-4">
+            <label asp-for="Reason" class="block text-sm font-medium text-gray-700">Reason</label>
+            <input type="text" asp-for="Reason" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md" />
+        </div>
+
+        @* Submit *@
+        <div class="flex items-center justify-end">
+            <button type="submit" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">Request</button>
+        </div>
+
+        <div asp-validation-summary="All" class="text-pink-900 text-sm mt-4"></div>
+
+        @if (ViewBag.Errors != null)
+        {
+            <div class="text-pink-900 text-sm mt-4">
+                <ul>
+                    @foreach (string error in ViewBag.Errors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
+    </form>
+</div>

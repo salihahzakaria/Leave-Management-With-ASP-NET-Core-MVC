@@ -124,7 +124,7 @@ namespace LeaveManagement.UI.Controllers
                     {
                         return RedirectToAction("Index", "Leave", new
                         {
-                            Areas = "Admin"
+                            area = "Admin"
                         });
                     }
                     // Check if user 'Employee'
@@ -132,7 +132,7 @@ namespace LeaveManagement.UI.Controllers
                     {
                         return RedirectToAction("Index", "Leave", new
                         {
-                            Areas = "Employee"
+                            area = "Employee"
                         });
                     }
                 }

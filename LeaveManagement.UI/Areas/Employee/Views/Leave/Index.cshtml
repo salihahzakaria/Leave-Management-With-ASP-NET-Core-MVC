@@ -1,0 +1,48 @@
+﻿@model IEnumerable<LeaveResponse>
+
+@{
+    ViewBag.Title = "All Leave";
+}
+
+<form asp-controller="Leave" asp-action="Index" asp-area="Employee" method="get" class="p-4">
+    
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-semibold">All Leave</h1>
+        <a asp-controller="Leave" asp-action="Create" asp-area="Employee" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">Apply leave</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <p>@ViewBag.Message</p>
+    }
+    else
+    {
+        <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Leave Type</th>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Start Date</th>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">End Date</th>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Days</th>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Reason</th>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Status</th>
+                    <th class="text-left py-3 px-4 font-semibold text-sm text-gray-700">Approver</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (LeaveResponse leave in Model)
+                {
+                    <tr class="border-b">
+                        <td class="py-3 px-4 text-gray-900">@leave.LeaveType</td>
+                        <td class="py-3 px-4 text-gray-900">@leave.StartDate</td>
+                        <td class="py-3 px-4 text-gray-900">@leave.EndDate</td>
+                        <td class="py-3 px-4 text-gray-900">@leave.Days</td>
+                        <td class="py-3 px-4 text-gray-900">@leave.Reason</td>
+                        <td class="py-3 px-4 text-gray-900">@leave.Status</td>
+                        <td class="py-3 px-4 text-gray-900">@leave.Approver</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</form>
