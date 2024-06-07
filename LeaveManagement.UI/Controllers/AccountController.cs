@@ -122,7 +122,7 @@ namespace LeaveManagement.UI.Controllers
                     // Check if user 'Admin'
                     if (await _userManager.IsInRoleAsync(user, UserTypeOptions.Admin.ToString()))
                     {
-                        return RedirectToAction("Index", "Leave", new
+                        return RedirectToAction("Index", "Home", new
                         {
                             area = "Admin"
                         });
