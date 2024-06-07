@@ -1,14 +1,28 @@
-﻿<!DOCTYPE html>
-
+﻿@using LeaveManagement.Core.Enums
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/css/tailwind.css" asp-append-version="true" />
 </head>
-<body>
-    <div>
-        @RenderBody()
+<body class="text-gray-900">
+    <div class="container mx-auto p-4">
+        <div class="p-6 flex justify-between items-center mb-4">
+
+            <div class="text-2xl text-gray-800">Leave Management System</div>
+
+            <div class="flex items-center">
+                <div>
+                    <a asp-controller="Account" asp-action="Register" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">Register</a>
+                    <a asp-controller="Account" asp-action="Login" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">Login</a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            @RenderBody()
+        </div>
     </div>
 </body>
 </html>

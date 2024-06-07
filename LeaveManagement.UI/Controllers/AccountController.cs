@@ -122,7 +122,7 @@ namespace LeaveManagement.UI.Controllers
                     // Check if user 'Admin'
                     if (await _userManager.IsInRoleAsync(user, UserTypeOptions.Admin.ToString()))
                     {
-                        return RedirectToAction("Index", "Home", new
+                        return RedirectToAction("Index", "Leave", new
                         {
                             area = "Admin"
                         });
@@ -142,6 +142,13 @@ namespace LeaveManagement.UI.Controllers
 
             ModelState.AddModelError("Login", "Invalid email or password");
             return View(loginRequest);
+        }
+
+        [Route("[action]")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }
