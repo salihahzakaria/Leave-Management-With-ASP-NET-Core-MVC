@@ -15,7 +15,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1586E2B6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.ServiceTests", "LeaveManagement.ServiceTests\LeaveManagement.ServiceTests.csproj", "{86E5E4F4-2E80-4AD5-A20D-C319AD62D685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.ControllerTests", "LeaveManagement.ControllerTests\LeaveManagement.ControllerTests.csproj", "{8FBCAF11-E479-4F62-AB95-721CA612AFF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.ControllerTests", "LeaveManagement.ControllerTests\LeaveManagement.ControllerTests.csproj", "{8FBCAF11-E479-4F62-AB95-721CA612AFF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "screenshots", "screenshots", "{7DB27586-F7E2-4307-B2FF-6708D594C6ED}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Users\Saliha\Pictures\Admin - Add Leave Type.PNG = ..\..\Users\Saliha\Pictures\Admin - Add Leave Type.PNG
+		..\..\Users\Saliha\Pictures\Admin - Apply Leave.PNG = ..\..\Users\Saliha\Pictures\Admin - Apply Leave.PNG
+		..\..\Users\Saliha\Pictures\Admin - Delete Leave.PNG = ..\..\Users\Saliha\Pictures\Admin - Delete Leave.PNG
+		..\..\Users\Saliha\Pictures\Admin - Edit Leave.PNG = ..\..\Users\Saliha\Pictures\Admin - Edit Leave.PNG
+		..\..\Users\Saliha\Pictures\Admin - Register User.PNG = ..\..\Users\Saliha\Pictures\Admin - Register User.PNG
+		..\..\Users\Saliha\Pictures\Admin - View Leave Type.PNG = ..\..\Users\Saliha\Pictures\Admin - View Leave Type.PNG
+		..\..\Users\Saliha\Pictures\Admin - View leave.PNG = ..\..\Users\Saliha\Pictures\Admin - View leave.PNG
+		..\..\Users\Saliha\Pictures\Admin - View User.PNG = ..\..\Users\Saliha\Pictures\Admin - View User.PNG
+		..\..\Users\Saliha\Pictures\Employee - Apply Leave.PNG = ..\..\Users\Saliha\Pictures\Employee - Apply Leave.PNG
+		..\..\Users\Saliha\Pictures\Employee - View Leave.PNG = ..\..\Users\Saliha\Pictures\Employee - View Leave.PNG
+		..\..\Users\Saliha\Pictures\login.PNG = ..\..\Users\Saliha\Pictures\login.PNG
+		..\..\Users\Saliha\Pictures\register.PNG = ..\..\Users\Saliha\Pictures\register.PNG
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
