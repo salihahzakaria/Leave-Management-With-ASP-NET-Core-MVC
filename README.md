@@ -18,7 +18,7 @@ The Leave Management System utilizes the following technologies and frameworks:
 
 - **HTML/CSS:** The standard markup and styling languages used for structuring and styling the user interface.
 
-- **TailwindCSS (optional):** A utility-first CSS framework used for rapidly building custom user interfaces. It offers a wide range of pre-designed components and utility classes for styling.
+- **TailwindCSS:** A utility-first CSS framework used for rapidly building custom user interfaces. It offers a wide range of pre-designed components and utility classes for styling.
 
 - **xUnit:** The unit testing framework used for writing and executing unit tests in C# projects. xUnit provides a simple and extensible approach to unit testing, allowing developers to verify the correctness of their code.
 
@@ -34,8 +34,6 @@ The Leave Management System utilizes the following technologies and frameworks:
 
 - [Features](#features)
 - [Architecture](#architecture)
-- [Installation](#installation)
-- [Usage](#usage)
 - [Testing](#testing)
 
 ## Features
@@ -63,46 +61,6 @@ The project follows clean architecture principles with the following layers:
 - Core: Contains business logic and domain entities.
 - Infrastructure: Implements data access using Entity Framework Core.
 - Presentation: Contains ASP.NET Core MVC controllers, views.
-
-## Installation
-
-Follow these steps to set up the Leave Management System on your local machine:
-
-1. **Clone the Repository:**
-    ```sh
-    git clone https://github.com/salihahzakaria/Leave-Management-With-ASP-NET-Core-MVC.git
-    ```
-
-2. **Update the Connection String:**
-    - Open the `appsettings.json` file located in the project root directory.
-    - Locate the `"ConnectionStrings"` section.
-    - Update the `DefaultConnection` string with your SQL Server connection details. 
-
-3. **Apply Database Migrations:**
-    - Open Tools > NuGet Package Manager > Package Manager Console. Select LeaveManagement.Infrastructure as default project.
-    - Run the following command to apply migrations and create the database schema:
-    ```sh
-    Update-Database
-    ```
-
-4. **Build and Run the Application:**
-
-5. **Access the Application:**
-    - Once the application is running, open your web browser and navigate to `http://localhost:5119`.
-
-6. **Optional: TailwindCSS Setup (if applicable):**
-
-## Usage
-
-To start using the Leave Management System:
-
-1. Open your web browser and navigate to:
-    ```
-    http://localhost:5119
-    ```
-2. Register a new account and log in.
-3. As an employee, you can apply for leaves and view your leave history.
-4. As an admin, you can manage users, leave types, and leave requests.
 
 ## Testing
 
